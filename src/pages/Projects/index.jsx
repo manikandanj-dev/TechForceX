@@ -74,7 +74,8 @@ export function Projects() {
               Projects
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              A selection of things I&apos;ve built.
+              Enterprise applications and production platforms built with React.js, React Native,
+              REST APIs, and payment integrations.
             </Typography>
           </motion.div>
 

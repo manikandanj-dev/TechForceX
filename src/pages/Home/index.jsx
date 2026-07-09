@@ -1,24 +1,21 @@
-import { motion, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Stack from '@mui/material/Stack'
 import { alpha, useTheme } from '@mui/material/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import ArchitectureIcon from '@mui/icons-material/Architecture'
 import DesignServicesIcon from '@mui/icons-material/DesignServices'
 import SpeedIcon from '@mui/icons-material/Speed'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { SectionContainer } from '@components/SectionContainer'
 import { PageTransition } from '@components/PageTransition'
-import { GradientBackground } from '@components/GradientBackground'
 import { GlassCard } from '@components/GlassCard'
 import { AnimatedCounter } from '@components/AnimatedCounter'
 import { MagneticButton } from '@components/MagneticButton'
-import { useMouseParallax } from '@hooks/useMouseParallax'
 import { fadeInUp, staggerContainer } from '@animations/variants'
 import { STATS, FEATURES } from '@utils/mockData'
+import { PremiumHero } from './components/PremiumHero'
 
 const FEATURE_ICONS = {
   AutoAwesome: AutoAwesomeIcon,
@@ -34,124 +31,10 @@ const FEATURE_ICONS = {
  */
 export function Home() {
   const theme = useTheme()
-  const { x, y } = useMouseParallax(24)
-  const orbAX = useTransform(x, (value) => value)
-  const orbAY = useTransform(y, (value) => value)
-  const orbBX = useTransform(x, (value) => -value * 1.4)
-  const orbBY = useTransform(y, (value) => -value * 1.4)
 
   return (
     <PageTransition>
-      {/* Hero */}
-      <Box sx={{ position: 'relative', overflow: 'hidden' }}>
-        <GradientBackground />
-
-        <motion.div
-          aria-hidden
-          style={{
-            x: orbAX,
-            y: orbAY,
-            position: 'absolute',
-            top: '18%',
-            left: '8%',
-            width: 120,
-            height: 120,
-            borderRadius: '50%',
-            background: alpha(theme.palette.primary.main, 0.5),
-            filter: 'blur(6px)',
-            zIndex: 0,
-          }}
-        />
-        <motion.div
-          aria-hidden
-          style={{
-            x: orbBX,
-            y: orbBY,
-            position: 'absolute',
-            bottom: '15%',
-            right: '10%',
-            width: 90,
-            height: 90,
-            borderRadius: '50%',
-            background: alpha(theme.palette.secondary.main, 0.5),
-            filter: 'blur(6px)',
-            zIndex: 0,
-          }}
-        />
-
-        <SectionContainer
-          maxWidth="md"
-          sx={{
-            position: 'relative',
-            zIndex: 1,
-            textAlign: 'center',
-            py: { xs: 12, md: 20 },
-          }}
-        >
-          <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-            <motion.div variants={fadeInUp}>
-              <Typography variant="overline" color="primary.main" fontWeight={700}>
-                Welcome to my portfolio
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h1"
-                sx={{
-                  mt: 2,
-                  mb: 3,
-                  background: `linear-gradient(135deg, ${theme.palette.text.primary}, ${theme.palette.primary.main})`,
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                I build delightful, animated web experiences
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={fadeInUp}>
-              <Typography variant="h6" color="text.secondary" sx={{ mb: 5, fontWeight: 400 }}>
-                React developer specializing in interactive UI, smooth motion design, and scalable
-                frontend architecture.
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={fadeInUp}>
-              <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={2}
-                sx={{ justifyContent: 'center' }}
-              >
-                <MagneticButton
-                  component={RouterLink}
-                  to="/projects"
-                  variant="contained"
-                  size="large"
-                >
-                  View Projects
-                </MagneticButton>
-                <MagneticButton
-                  component={RouterLink}
-                  to="/contact"
-                  variant="outlined"
-                  size="large"
-                >
-                  Get in Touch
-                </MagneticButton>
-              </Stack>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ marginTop: 64 }}
-          >
-            <KeyboardArrowDownIcon sx={{ fontSize: 32 }} color="disabled" />
-          </motion.div>
-        </SectionContainer>
-      </Box>
+      <PremiumHero />
 
       {/* Animated statistics */}
       <SectionContainer sx={{ py: { xs: 8, md: 12 } }}>
@@ -190,7 +73,7 @@ export function Home() {
             Why work with me
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 6, textAlign: 'center' }}>
-            The principles behind every project I ship.
+            Practical strengths I bring to enterprise React.js and React Native delivery.
           </Typography>
         </motion.div>
 
@@ -254,13 +137,13 @@ export function Home() {
             }}
           >
             <Typography variant="h3" sx={{ mb: 2 }}>
-              Let&apos;s build something great
+              Let&apos;s build reliable digital products
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Have an idea in mind? I&apos;d love to help bring it to life.
+              Open to React.js, React Native, API integration, and payment-focused frontend work.
             </Typography>
             <MagneticButton component={RouterLink} to="/contact" variant="contained" size="large">
-              Start a Project
+              Contact Me
             </MagneticButton>
           </GlassCard>
         </motion.div>

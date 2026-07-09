@@ -21,7 +21,8 @@ export function Skills() {
               Skills
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 5 }}>
-              Technologies and tools I use to build modern web applications.
+              Frontend, state management, API, and delivery tools used across production React.js
+              and React Native projects.
             </Typography>
           </motion.div>
 

@@ -25,7 +25,8 @@ export function Experience() {
               Experience
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              A quick look at my professional journey.
+              Enterprise product experience across React.js, React Native, payments, APIs, and
+              responsive application delivery.
             </Typography>
           </motion.div>
 

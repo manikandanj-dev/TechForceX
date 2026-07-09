@@ -10,6 +10,9 @@ const Experience = lazy(() => import('@pages/Experience'))
 const MiniGames = lazy(() => import('@pages/MiniGames'))
 const Blog = lazy(() => import('@pages/Blog'))
 const Contact = lazy(() => import('@pages/Contact'))
+const Dashboard = lazy(() => import('@pages/Dashboard'))
+const AIChat = lazy(() => import('@pages/AIChat'))
+const GitHubPage = lazy(() => import('@pages/GitHub'))
 const NotFound = lazy(() => import('@pages/NotFound'))
 
 /**
@@ -28,6 +31,9 @@ export const routes = [
       { path: 'mini-games', element: <MiniGames /> },
       { path: 'blog', element: <Blog /> },
       { path: 'contact', element: <Contact /> },
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'ai-chat', element: <AIChat /> },
+      { path: 'github', element: <GitHubPage /> },
       { path: '*', element: <NotFound /> },
     ],
   },

@@ -36,11 +36,44 @@ export default defineConfig({
         // changes on every release.
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined
-          if (/[\\/](react|react-dom|react-router-dom)[\\/]/.test(id)) return 'vendor-react'
-          if (/[\\/](@mui|@emotion)[\\/]/.test(id)) return 'vendor-mui'
-          if (/[\\/](framer-motion|gsap|motion-dom|motion-utils)[\\/]/.test(id))
+          const packagePath = id.replaceAll('\\', '/')
+          if (
+            packagePath.includes('/react/') ||
+            packagePath.includes('/react-dom/') ||
+            packagePath.includes('/react-router-dom/')
+          )
+            return 'vendor-react'
+          if (packagePath.includes('/@mui/') || packagePath.includes('/@emotion/'))
+            return 'vendor-mui'
+          if (
+            packagePath.includes('/framer-motion/') ||
+            packagePath.includes('/gsap/') ||
+            packagePath.includes('/motion-dom/') ||
+            packagePath.includes('/motion-utils/')
+          )
             return 'vendor-motion'
-          if (/[\\/](@tanstack|axios|zustand)[\\/]/.test(id)) return 'vendor-data'
+          if (packagePath.includes('/@react-three/')) return 'vendor-three-react'
+          if (packagePath.includes('/@monogrid/')) return 'vendor-three-helpers'
+          if (
+            packagePath.includes('/three-stdlib/') ||
+            packagePath.includes('/three-mesh-bvh/') ||
+            packagePath.includes('/maath/') ||
+            packagePath.includes('/meshline/') ||
+            packagePath.includes('/camera-controls/') ||
+            packagePath.includes('/troika-three-text/') ||
+            packagePath.includes('/troika-three-utils/') ||
+            packagePath.includes('/troika-worker-utils/') ||
+            packagePath.includes('/stats-gl/') ||
+            packagePath.includes('/suspend-react/')
+          )
+            return 'vendor-three-helpers'
+          if (packagePath.includes('/three/')) return 'vendor-three'
+          if (
+            packagePath.includes('/@tanstack/') ||
+            packagePath.includes('/axios/') ||
+            packagePath.includes('/zustand/')
+          )
+            return 'vendor-data'
           return 'vendor'
         },
       },

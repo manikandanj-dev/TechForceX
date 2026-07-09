@@ -24,7 +24,8 @@ export function Blog() {
               Blog
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 5 }}>
-              Thoughts on frontend engineering, animation, and architecture.
+              Notes on scalable frontend engineering, React Native delivery, API integration, and
+              production application quality.
             </Typography>
           </motion.div>
 

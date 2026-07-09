@@ -32,13 +32,16 @@ export function About() {
             <Grid size={{ xs: 12, md: 8 }}>
               <motion.div variants={fadeInUp}>
                 <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-                  I&apos;m a frontend engineer passionate about building interactive, animated, and
-                  accessible web applications. I enjoy turning complex requirements into clean,
-                  maintainable React architecture.
+                  I&apos;m Manikandan J, a Software Engineer with 4.7+ years of experience
+                  specializing in React.js and React Native development. I build scalable enterprise
+                  web and cross-platform mobile applications with a focus on clean architecture,
+                  performance, and exceptional user experience.
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
-                  Outside of coding, I explore motion design, generative art, and mentor aspiring
-                  developers transitioning into frontend engineering.
+                  My work includes reusable component systems, responsive Material UI interfaces,
+                  REST API integration, Adyen payment gateway integration, Android and iOS app
+                  delivery, performance optimization, and Agile collaboration with product and
+                  engineering teams.
                 </Typography>
               </motion.div>
             </Grid>

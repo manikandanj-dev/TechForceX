@@ -2,7 +2,7 @@
  * Site-wide constants: navigation, metadata, and social links.
  */
 
-export const SITE_NAME = 'React Animation Lab'
+export const SITE_NAME = 'Manikandan J'
 
 export const NAV_LINKS = [
   { label: 'Home', path: '/' },
@@ -13,6 +13,9 @@ export const NAV_LINKS = [
   { label: 'Mini Games', path: '/mini-games' },
   { label: 'Blog', path: '/blog' },
   { label: 'Contact', path: '/contact' },
+  { label: 'Dashboard', path: '/dashboard' },
+  { label: 'AI Chat', path: '/ai-chat' },
+  { label: 'GitHub', path: '/github' },
 ]
 
 export const SOCIAL_LINKS = [

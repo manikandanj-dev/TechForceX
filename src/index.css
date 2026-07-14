@@ -17,10 +17,20 @@ html {
 
 body {
   margin: 0;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100svh;
+}
+
+/* Custom animated cursor: hide the native cursor only while our own
+   cursor component is mounted (desktop pointer devices, motion allowed). */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
 }

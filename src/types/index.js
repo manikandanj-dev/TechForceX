@@ -20,6 +20,7 @@
  * @property {string} [repoUrl]
  * @property {string} [demoUrl]
  * @property {string} [image]
+ * @property {string[]} [images]
  */
 
 /**

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { useTheme } from '@mui/material/styles'
 import { motion } from 'framer-motion'
 import { SITE_NAME } from '@utils/constants'
 
@@ -22,6 +23,7 @@ const letterVariants = {
  * pausing rAF), so the overlay can never get stuck blocking clicks.
  */
 export function LoadingScreen({ onFinished, minDuration = 1600 }) {
+  const theme = useTheme()
   const letters = SITE_NAME.split('')
   const [isFinishing, setIsFinishing] = useState(false)
 
@@ -72,7 +74,7 @@ export function LoadingScreen({ onFinished, minDuration = 1600 }) {
                   fontWeight: 800,
                   display: 'inline-block',
                   whiteSpace: 'pre',
-                  background: 'linear-gradient(135deg, #818cf8, #ec4899)',
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -100,7 +102,7 @@ export function LoadingScreen({ onFinished, minDuration = 1600 }) {
             style={{
               width: '50%',
               height: '100%',
-              background: 'linear-gradient(135deg, #6366f1, #ec4899)',
+              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
             }}
           />
         </Box>

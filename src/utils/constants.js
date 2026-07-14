@@ -10,12 +10,7 @@ export const NAV_LINKS = [
   { label: 'Skills', path: '/skills' },
   { label: 'Projects', path: '/projects' },
   { label: 'Experience', path: '/experience' },
-  { label: 'Mini Games', path: '/mini-games' },
-  { label: 'Blog', path: '/blog' },
   { label: 'Contact', path: '/contact' },
-  { label: 'Dashboard', path: '/dashboard' },
-  { label: 'AI Chat', path: '/ai-chat' },
-  { label: 'GitHub', path: '/github' },
 ]
 
 export const SOCIAL_LINKS = [

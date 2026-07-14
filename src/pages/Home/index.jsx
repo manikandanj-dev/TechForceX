@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import { alpha, useTheme } from '@mui/material/styles'
-import { Link as RouterLink } from 'react-router-dom'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 import ArchitectureIcon from '@mui/icons-material/Architecture'
 import DesignServicesIcon from '@mui/icons-material/DesignServices'
@@ -72,7 +71,18 @@ export function Home() {
           <Typography variant="h2" sx={{ mb: 1, textAlign: 'center' }}>
             Why work with me
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 6, textAlign: 'center' }}>
+          <Typography
+            variant="h6"
+            color="text.secondary"
+            sx={{
+              fontWeight: 500,
+              lineHeight: 1.7,
+              mb: 6,
+              textAlign: 'center',
+              maxWidth: 640,
+              mx: 'auto',
+            }}
+          >
             Practical strengths I bring to enterprise React.js and React Native delivery.
           </Typography>
         </motion.div>
@@ -142,7 +152,12 @@ export function Home() {
             <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
               Open to React.js, React Native, API integration, and payment-focused frontend work.
             </Typography>
-            <MagneticButton component={RouterLink} to="/contact" variant="contained" size="large">
+            <MagneticButton
+              component="a"
+              href="mailto:manikandanj.dev@gmail.com"
+              variant="contained"
+              size="large"
+            >
               Contact Me
             </MagneticButton>
           </GlassCard>

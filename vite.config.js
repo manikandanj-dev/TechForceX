@@ -52,22 +52,6 @@ export default defineConfig({
             packagePath.includes('/motion-utils/')
           )
             return 'vendor-motion'
-          if (packagePath.includes('/@react-three/')) return 'vendor-three-react'
-          if (packagePath.includes('/@monogrid/')) return 'vendor-three-helpers'
-          if (
-            packagePath.includes('/three-stdlib/') ||
-            packagePath.includes('/three-mesh-bvh/') ||
-            packagePath.includes('/maath/') ||
-            packagePath.includes('/meshline/') ||
-            packagePath.includes('/camera-controls/') ||
-            packagePath.includes('/troika-three-text/') ||
-            packagePath.includes('/troika-three-utils/') ||
-            packagePath.includes('/troika-worker-utils/') ||
-            packagePath.includes('/stats-gl/') ||
-            packagePath.includes('/suspend-react/')
-          )
-            return 'vendor-three-helpers'
-          if (packagePath.includes('/three/')) return 'vendor-three'
           if (
             packagePath.includes('/@tanstack/') ||
             packagePath.includes('/axios/') ||

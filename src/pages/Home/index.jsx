@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { SEO } from '@components/SEO'
+import { SEO_ROUTES } from '@/seo/seoConfig'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -31,8 +33,17 @@ const FEATURE_ICONS = {
 export function Home() {
   const theme = useTheme()
 
+  const seo = SEO_ROUTES['/']
+
   return (
     <PageTransition>
+      <SEO
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.canonical}
+        ogTitle={seo.ogTitle}
+        ogDesc={seo.ogDesc}
+      />
       <PremiumHero />
 
       {/* Animated statistics */}

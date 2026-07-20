@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { SEO } from '@components/SEO'
+import { SEO_ROUTES } from '@/seo/seoConfig'
 import { memo } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -422,8 +424,17 @@ export function Experience() {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const prefersReducedMotion = usePrefersReducedMotion()
 
+  const seo = SEO_ROUTES['/experience']
+
   return (
     <PageTransition>
+      <SEO
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.canonical}
+        ogTitle={seo.ogTitle}
+        ogDesc={seo.ogDesc}
+      />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />
         <Box

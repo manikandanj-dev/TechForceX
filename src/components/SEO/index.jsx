@@ -1,0 +1,82 @@
+/**
+ * SEO Component
+ *
+ * A drop-in component that injects per-page meta tags into <head>
+ * using react-helmet-async. Place it as the FIRST child inside each
+ * page component's return statement.
+ *
+ * Props:
+ *  title       (string)  — Page <title>. Appended with site name.
+ *  description (string)  — Meta description (max 160 chars).
+ *  canonical   (string)  — Relative URL path, e.g. "/projects"
+ *  ogTitle     (string)  — Open Graph title (falls back to title)
+ *  ogDesc      (string)  — Open Graph description (falls back to description)
+ *  ogImage     (string)  — Absolute OG image URL (falls back to site default)
+ *  noIndex     (boolean) — When true, adds noindex,nofollow robots tag
+ *
+ * Usage:
+ *  import { SEO } from '@components/SEO'
+ *  <SEO title="About Me" description="Learn about..." canonical="/about" />
+ */
+
+import { Helmet } from 'react-helmet-async'
+import { SITE } from '@/seo/seoConfig'
+
+export function SEO({
+  title,
+  description,
+  canonical,
+  ogTitle,
+  ogDesc,
+  ogImage,
+  noIndex = false,
+}) {
+  const resolvedTitle = title || SITE.title
+  const resolvedDescription = description || SITE.description
+  const resolvedOgTitle = ogTitle || resolvedTitle
+  const resolvedOgDesc = ogDesc || resolvedDescription
+  const resolvedOgImage = ogImage || SITE.ogImage
+  const resolvedCanonical = canonical ? `${SITE.url}${canonical}` : SITE.url
+
+  return (
+    <Helmet>
+      {/* ── Primary Meta ── */}
+      <title>{resolvedTitle}</title>
+      <meta name="description" content={resolvedDescription} />
+      <meta name="author" content={SITE.author} />
+      <meta name="theme-color" content={SITE.themeColor} />
+
+      {/* ── Robots ── */}
+      {noIndex ? (
+        <meta name="robots" content="noindex,nofollow" />
+      ) : (
+        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+      )}
+
+      {/* ── Canonical URL ── */}
+      <link rel="canonical" href={resolvedCanonical} />
+
+      {/* ── Open Graph (Facebook, LinkedIn, WhatsApp) ── */}
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={SITE.name} />
+      <meta property="og:url" content={resolvedCanonical} />
+      <meta property="og:title" content={resolvedOgTitle} />
+      <meta property="og:description" content={resolvedOgDesc} />
+      <meta property="og:image" content={resolvedOgImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={`${SITE.author} — Software Engineer`} />
+      <meta property="og:locale" content={SITE.locale} />
+
+      {/* ── Twitter Card ── */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content={SITE.twitterHandle} />
+      <meta name="twitter:creator" content={SITE.twitterHandle} />
+      <meta name="twitter:title" content={resolvedOgTitle} />
+      <meta name="twitter:description" content={resolvedOgDesc} />
+      <meta name="twitter:image" content={resolvedOgImage} />
+    </Helmet>
+  )
+}
+
+export default SEO

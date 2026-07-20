@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { SEO } from '@components/SEO'
+import { SEO_ROUTES } from '@/seo/seoConfig'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -106,8 +108,17 @@ export function About() {
   const isDark = theme.palette.mode === 'dark'
   const prefersReducedMotion = usePrefersReducedMotion()
 
+  const seo = SEO_ROUTES['/about']
+
   return (
     <PageTransition>
+      <SEO
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.canonical}
+        ogTitle={seo.ogTitle}
+        ogDesc={seo.ogDesc}
+      />
       <SectionContainer>
         <motion.div
           variants={staggerContainer}

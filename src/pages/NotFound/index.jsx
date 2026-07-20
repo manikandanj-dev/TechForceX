@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { SectionContainer } from '@components/SectionContainer'
 import { PageTransition } from '@components/PageTransition'
 import { fadeInUp } from '@animations/variants'
+import { SEO } from '@components/SEO'
+
 
 /**
  * Fallback page rendered for unmatched routes.
@@ -12,6 +14,12 @@ import { fadeInUp } from '@animations/variants'
 export function NotFound() {
   return (
     <PageTransition>
+      <SEO
+        title="Page Not Found — Manikandan J"
+        description="The page you are looking for does not exist."
+        canonical="/"
+        noIndex={true}
+      />
       <SectionContainer sx={{ textAlign: 'center', py: { xs: 12, md: 18 } }}>
         <motion.div variants={fadeInUp} initial="hidden" animate="visible">
           <Typography variant="h1" sx={{ mb: 2 }}>

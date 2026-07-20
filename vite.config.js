@@ -23,6 +23,7 @@ export default defineConfig({
       '@theme': fileURLToPath(new URL('./src/theme', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@types': fileURLToPath(new URL('./src/types', import.meta.url)),
+      '@seo': fileURLToPath(new URL('./src/seo', import.meta.url)),
     },
   },
   build: {

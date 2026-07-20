@@ -1,4 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
+import { SEO } from '@components/SEO'
+import { SEO_ROUTES } from '@/seo/seoConfig'
 import { motion } from 'framer-motion'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -282,8 +284,17 @@ export function Projects() {
     setSearchQuery(event.target.value)
   }
 
+  const seo = SEO_ROUTES['/projects']
+
   return (
     <PageTransition>
+      <SEO
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.canonical}
+        ogTitle={seo.ogTitle}
+        ogDesc={seo.ogDesc}
+      />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />
         <Box

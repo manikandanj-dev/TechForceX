@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  NOTE: Replace https://manikandanj.dev with your actual deployed domain
-  before submitting this to Google Search Console / hosting it publicly.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://manikandanj.dev/</loc>
+    <loc>https://tech-force-x.vercel.app/</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://manikandanj.dev/about</loc>
+    <loc>https://tech-force-x.vercel.app/about</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manikandanj.dev/skills</loc>
+    <loc>https://tech-force-x.vercel.app/skills</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://manikandanj.dev/projects</loc>
+    <loc>https://tech-force-x.vercel.app/projects</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://manikandanj.dev/experience</loc>
+    <loc>https://tech-force-x.vercel.app/experience</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manikandanj.dev/contact</loc>
+    <loc>https://tech-force-x.vercel.app/contact</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 </urlset>
+

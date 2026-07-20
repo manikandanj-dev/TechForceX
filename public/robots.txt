@@ -1,5 +1,4 @@
-# NOTE: replace manikandanj.dev with your actual deployed domain.
 User-agent: *
 Allow: /
 
-Sitemap: https://manikandanj.dev/sitemap.xml
+Sitemap: https://tech-force-x.vercel.app/sitemap.xml

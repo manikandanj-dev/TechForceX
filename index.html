@@ -9,8 +9,8 @@
     <meta name="theme-color" content="#6366f1" />
 
     <!--
-      Fallback title & description shown before React hydrates.
-      react-helmet-async will override these on every route render.
+      Fallback description shown before React hydrates.
+      react-helmet-async will override this on every route render.
     -->
     <meta
       name="description"
@@ -18,11 +18,15 @@
     />
     <meta name="author" content="Manikandan J" />
 
+    <!--
+      NOTE: No <title> tag here.
+      react-helmet-async injects a unique <title> on every route.
+      A static <title> in index.html causes TWO title tags in the DOM,
+      which confuses Google's crawler and can trigger duplicate-content issues.
+    -->
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://picsum.photos" crossorigin />
-
-    <!-- Fallback title (overridden per route by react-helmet-async) -->
-    <title>Manikandan J | Software Engineer</title>
   </head>
   <body>
     <div id="root"></div>

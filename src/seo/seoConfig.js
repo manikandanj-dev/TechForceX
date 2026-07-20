@@ -9,13 +9,13 @@
 
 export const SITE = {
   name: 'Manikandan J',
-  url: 'https://manikandanj.dev',
+  url: 'https://tech-force-x.vercel.app',
   title: 'Manikandan J | React.js & React Native Software Engineer',
   description:
     'Software Engineer with 4.7+ years of experience building enterprise-grade React.js and React Native applications, payment platforms, and scalable frontend architectures.',
   author: 'Manikandan J',
   email: 'manikandanj.dev@gmail.com',
-  ogImage: 'https://manikandanj.dev/og-image.png',
+  ogImage: 'https://tech-force-x.vercel.app/og-image.png',
   twitterHandle: '@manikandanj_dev',
   locale: 'en_IN',
   themeColor: '#6366f1',

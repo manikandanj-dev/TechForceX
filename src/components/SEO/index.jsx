@@ -53,7 +53,6 @@ export function SEO({
 
       {/* ── Webmaster Verification ── */}
       <meta name="msvalidate.01" content="83EFFCEEC405546A949FA0447D801580" />
-
       {/* ── Robots ── */}
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />

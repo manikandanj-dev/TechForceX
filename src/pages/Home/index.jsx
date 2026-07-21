@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
 import { SEO_ROUTES } from '@/seo/seoConfig'
+import { buildPersonSchema } from '@/seo/schemas/personSchema'
+import { buildWebSiteSchema } from '@/seo/schemas/webSiteSchema'
+import { buildOrganizationSchema } from '@/seo/schemas/organizationSchema'
+import { buildFaqSchema } from '@/seo/schemas/faqSchema'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -26,6 +30,34 @@ const FEATURE_ICONS = {
 }
 
 /**
+ * buildHomePageGraph()
+ *
+ * Combines four schema entities into a single JSON-LD @graph:
+ *   1. Person       (Task 1) — who Manikandan J is
+ *   2. WebSite      (Task 3) — the portfolio website identity
+ *   3. Organization (Task 4) — the professional / freelance entity
+ *   4. FAQPage      (Task 5) — Q&A pairs for Google FAQ Rich Results
+ *
+ * All four share one @context declared at @graph root level.
+ * Cross-entity links use @id references — no data is repeated across nodes.
+ * Produces exactly ONE <script type="application/ld+json"> on the homepage.
+ *
+ * @returns {Object} JSON-LD object with @context and @graph
+ */
+function buildHomePageGraph() {
+  // Strip @context from individual nodes — @graph owns the single context.
+  const { '@context': _c1, ...personNode } = buildPersonSchema()
+  const { ...webSiteNode } = buildWebSiteSchema()      // already has no @context
+  const { ...orgNode } = buildOrganizationSchema()     // already has no @context
+  const { ...faqNode } = buildFaqSchema()              // already has no @context
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [personNode, webSiteNode, orgNode, faqNode],
+  }
+}
+
+/**
  * Premium, animated landing page: hero with mouse parallax and a floating
  * gradient background, animated statistics, feature highlights in
  * glassmorphism cards, and a closing call-to-action.
@@ -43,6 +75,7 @@ export function Home() {
         canonical={seo.canonical}
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
+        schema={buildHomePageGraph()}
       />
       <PremiumHero />
 

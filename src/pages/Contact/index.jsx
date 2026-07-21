@@ -1,6 +1,7 @@
 import { useState, memo } from 'react'
 import { SEO } from '@components/SEO'
 import { SEO_ROUTES } from '@/seo/seoConfig'
+import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import { AnimatePresence, motion } from 'framer-motion'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -232,6 +233,7 @@ export function Contact() {
         canonical={seo.canonical}
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
+        schema={buildBreadcrumbSchema('/contact')}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />

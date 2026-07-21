@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
 import { SEO_ROUTES } from '@/seo/seoConfig'
+import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -175,6 +176,7 @@ export function Skills() {
         canonical={seo.canonical}
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
+        schema={buildBreadcrumbSchema('/skills')}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />

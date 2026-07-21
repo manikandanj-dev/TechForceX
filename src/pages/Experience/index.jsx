@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
 import { SEO_ROUTES } from '@/seo/seoConfig'
+import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import { memo } from 'react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -434,6 +435,7 @@ export function Experience() {
         canonical={seo.canonical}
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
+        schema={buildBreadcrumbSchema('/experience')}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />

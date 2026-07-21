@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from 'react'
 import { SEO } from '@components/SEO'
 import { SEO_ROUTES } from '@/seo/seoConfig'
+import { buildSoftwareAppSchema } from '@/seo/schemas/softwareAppSchema'
+import { buildBreadcrumbSchema, buildPageGraph } from '@/seo/schemas/breadcrumbSchema'
 import { motion } from 'framer-motion'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -294,6 +296,7 @@ export function Projects() {
         canonical={seo.canonical}
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
+        schema={buildPageGraph([buildSoftwareAppSchema(), buildBreadcrumbSchema('/projects')])}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />

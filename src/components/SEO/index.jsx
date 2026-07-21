@@ -13,10 +13,14 @@
  *  ogDesc      (string)  — Open Graph description (falls back to description)
  *  ogImage     (string)  — Absolute OG image URL (falls back to site default)
  *  noIndex     (boolean) — When true, adds noindex,nofollow robots tag
+ *  schema      (object)  — Optional Schema.org JSON-LD object (e.g. Person).
+ *                          Serialised and injected as <script type="application/ld+json">.
+ *                          Pass the result of buildPersonSchema() or similar builder.
  *
  * Usage:
  *  import { SEO } from '@components/SEO'
- *  <SEO title="About Me" description="Learn about..." canonical="/about" />
+ *  import { buildPersonSchema } from '@/seo/schemas/personSchema'
+ *  <SEO title="Home" description="..." canonical="/" schema={buildPersonSchema()} />
  */
 
 import { Helmet } from 'react-helmet-async'
@@ -30,6 +34,7 @@ export function SEO({
   ogDesc,
   ogImage,
   noIndex = false,
+  schema = null,
 }) {
   const resolvedTitle = title || SITE.title
   const resolvedDescription = description || SITE.description
@@ -75,6 +80,20 @@ export function SEO({
       <meta name="twitter:title" content={resolvedOgTitle} />
       <meta name="twitter:description" content={resolvedOgDesc} />
       <meta name="twitter:image" content={resolvedOgImage} />
+
+      {/* ── Structured Data (JSON-LD) ── */}
+      {/*
+       * react-helmet-async renders <script> children as-is inside <head>.
+       * JSON.stringify with no replacer and no space keeps the payload compact.
+       * dangerouslySetInnerHTML is required because Helmet does not allow
+       * plain text children inside <script> tags.
+       */}
+      {schema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      )}
     </Helmet>
   )
 }

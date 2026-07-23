@@ -33,8 +33,10 @@ export function SEO({
   ogTitle,
   ogDesc,
   ogImage,
+  ogImageAlt,
   noIndex = false,
   schema = null,
+  lang = 'en',
 }) {
   const resolvedTitle = title || SITE.title
   const resolvedDescription = description || SITE.description
@@ -42,9 +44,12 @@ export function SEO({
   const resolvedOgDesc = ogDesc || resolvedDescription
   const resolvedOgImage = ogImage || SITE.ogImage
   const resolvedCanonical = canonical ? `${SITE.url}${canonical}` : SITE.url
+  const resolvedOgLocale = lang === 'da' ? 'da_DK' : (SITE.locale || 'en_IN')
+  const resolvedOgImageAlt = ogImageAlt || `${SITE.author} — Software Engineer`
 
   return (
     <Helmet>
+      <html lang={lang} />
       {/* ── Primary Meta ── */}
       <title>{resolvedTitle}</title>
       <meta name="description" content={resolvedDescription} />
@@ -61,7 +66,7 @@ export function SEO({
       {/* ── Canonical URL ── */}
       <link rel="canonical" href={resolvedCanonical} />
 
-      {/* ── Open Graph (Facebook, LinkedIn, WhatsApp) ── */}
+      {/* ── Open Graph ── */}
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={SITE.name} />
       <meta property="og:url" content={resolvedCanonical} />
@@ -70,8 +75,8 @@ export function SEO({
       <meta property="og:image" content={resolvedOgImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={`${SITE.author} — Software Engineer`} />
-      <meta property="og:locale" content={SITE.locale} />
+      <meta property="og:image:alt" content={resolvedOgImageAlt} />
+      <meta property="og:locale" content={resolvedOgLocale} />
 
       {/* ── Twitter Card ── */}
       <meta name="twitter:card" content="summary_large_image" />

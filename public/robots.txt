@@ -1,4 +1,22 @@
+# Production robots.txt for Manikandan J Portfolio
+# Domain: https://tech-force-x.vercel.app
+
 User-agent: *
 Allow: /
 
+# Disallow crawling of non-public, account, payment, and internal routes
+Disallow: /account/
+Disallow: /login
+Disallow: /resetPassword
+Disallow: /passwordRecovery
+Disallow: /pay/
+Disallow: /create/
+Disallow: /testing
+Disallow: /version
+Disallow: /globalMessage
+Disallow: /demo/
+Disallow: /showcase/
+Disallow: /internal/
+
+# Sitemap location
 Sitemap: https://tech-force-x.vercel.app/sitemap.xml

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
-import { SEO_ROUTES } from '@/seo/seoConfig'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -165,8 +166,8 @@ export function Skills() {
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
   const prefersReducedMotion = usePrefersReducedMotion()
-
-  const seo = SEO_ROUTES['/skills']
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/skills')
 
   return (
     <PageTransition>
@@ -177,6 +178,7 @@ export function Skills() {
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
         schema={buildBreadcrumbSchema('/skills')}
+        lang={locale}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />
@@ -214,9 +216,9 @@ export function Skills() {
                           prefersReducedMotion
                             ? undefined
                             : {
-                                y: -8,
-                                boxShadow: `0 24px 48px ${alpha(category.accent, 0.32)}`,
-                              }
+                              y: -8,
+                              boxShadow: `0 24px 48px ${alpha(category.accent, 0.32)}`,
+                            }
                         }
                         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                         style={{ height: '100%', borderRadius: 24 }}

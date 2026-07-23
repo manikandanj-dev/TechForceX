@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
-import { SEO_ROUTES } from '@/seo/seoConfig'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -108,8 +109,8 @@ export function About() {
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
   const prefersReducedMotion = usePrefersReducedMotion()
-
-  const seo = SEO_ROUTES['/about']
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/about')
 
   return (
     <PageTransition>
@@ -120,6 +121,7 @@ export function About() {
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
         schema={buildBreadcrumbSchema('/about')}
+        lang={locale}
       />
       <SectionContainer>
         <motion.div

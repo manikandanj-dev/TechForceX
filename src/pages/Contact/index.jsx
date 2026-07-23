@@ -1,6 +1,7 @@
 import { useState, memo } from 'react'
 import { SEO } from '@components/SEO'
-import { SEO_ROUTES } from '@/seo/seoConfig'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import { AnimatePresence, motion } from 'framer-motion'
 import Typography from '@mui/material/Typography'
@@ -136,10 +137,10 @@ const SocialButton = memo(function SocialButton({ social }) {
           prefersReducedMotion
             ? undefined
             : {
-                y: -6,
-                rotate: 8,
-                boxShadow: `0 16px 32px ${alpha(theme.palette.primary.main, 0.35)}`,
-              }
+              y: -6,
+              rotate: 8,
+              boxShadow: `0 16px 32px ${alpha(theme.palette.primary.main, 0.35)}`,
+            }
         }
         transition={{ type: 'spring', stiffness: 300, damping: 18 }}
         sx={{ borderRadius: '50%' }}
@@ -223,7 +224,8 @@ export function Contact() {
     }, 1400)
   }
 
-  const seo = SEO_ROUTES['/contact']
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/contact')
 
   return (
     <PageTransition>
@@ -234,6 +236,7 @@ export function Contact() {
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
         schema={buildBreadcrumbSchema('/contact')}
+        lang={locale}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />

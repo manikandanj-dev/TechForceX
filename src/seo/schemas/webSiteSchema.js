@@ -67,11 +67,17 @@ export function buildWebSiteSchema() {
     url: SITE.url, // 'https://tech-force-x.vercel.app'
 
     /**
-     * description: a site-level description focused on what the SITE is,
-     * not a personal bio (that belongs to the Person node).
+     * IMPL-05: Description changed from branded ("Portfolio website of
+     * Manikandan J") to topical resource framing.
+     *
+     * Google uses WebSite.description when building topic clusters for a
+     * domain. "A practitioner portfolio and technical resource covering
+     * React.js..." signals the site is a RESOURCE about these topics,
+     * not merely a personal brand page — increasing the likelihood it
+     * surfaces in topical (non-branded) SERP clusters and AI knowledge graphs.
      */
     description:
-      'Portfolio website of Manikandan J, showcasing enterprise React.js and React Native projects, technical skills, and professional experience.',
+      'A practitioner portfolio and technical resource covering React.js and React Native engineering, payment gateway integration (Adyen), TypeScript, and enterprise frontend architecture.',
 
     // ── Locale ───────────────────────────────────────────────────────────────
     /**

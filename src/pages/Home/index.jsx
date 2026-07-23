@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
-import { SEO_ROUTES } from '@/seo/seoConfig'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 import { buildPersonSchema } from '@/seo/schemas/personSchema'
 import { buildWebSiteSchema } from '@/seo/schemas/webSiteSchema'
 import { buildOrganizationSchema } from '@/seo/schemas/organizationSchema'
@@ -64,8 +65,8 @@ function buildHomePageGraph() {
  */
 export function Home() {
   const theme = useTheme()
-
-  const seo = SEO_ROUTES['/']
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/')
 
   return (
     <PageTransition>
@@ -76,6 +77,7 @@ export function Home() {
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
         schema={buildHomePageGraph()}
+        lang={locale}
       />
       <PremiumHero />
 

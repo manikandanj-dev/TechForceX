@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { SEO } from '@components/SEO'
-import { SEO_ROUTES } from '@/seo/seoConfig'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 import { buildBreadcrumbSchema } from '@/seo/schemas/breadcrumbSchema'
 import { memo } from 'react'
 import Typography from '@mui/material/Typography'
@@ -393,13 +394,13 @@ function TimelineRow({ exp, index, isDesktop }) {
           variants={
             isEven
               ? {
-                  hidden: { opacity: 0, x: -40 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-                }
+                hidden: { opacity: 0, x: -40 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }
               : {
-                  hidden: { opacity: 0, x: 40 },
-                  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-                }
+                hidden: { opacity: 0, x: 40 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+              }
           }
           initial="hidden"
           whileInView="visible"
@@ -424,8 +425,8 @@ export function Experience() {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const prefersReducedMotion = usePrefersReducedMotion()
-
-  const seo = SEO_ROUTES['/experience']
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/experience')
 
   return (
     <PageTransition>
@@ -436,6 +437,7 @@ export function Experience() {
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
         schema={buildBreadcrumbSchema('/experience')}
+        lang={locale}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />

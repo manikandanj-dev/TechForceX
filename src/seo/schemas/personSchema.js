@@ -67,21 +67,45 @@ export function buildPersonSchema() {
     jobTitle: 'Software Engineer — React.js & React Native',
 
     /**
-     * knowsAbout: an array of topics / technologies the person is expert in.
-     * These help Google understand topical authority.
+     * IMPL-04: knowsAbout expanded with topical concepts alongside tool names.
+     *
+     * Tool names alone (React.js, TypeScript) link to product entities in the
+     * Knowledge Graph. Topical concepts ('Frontend Architecture', 'Mobile
+     * Application Development') build SUBJECT-MATTER authority — the signal
+     * that tells Google and AI assistants "this person is an authority on these
+     * topics", not just "this person uses these tools."
+     *
+     * AI assistants (ChatGPT, Perplexity, Gemini) use knowsAbout when deciding
+     * whether to recommend a practitioner for domain questions like:
+     *   "Who can I hire for mobile application development?"
+     *   "Who knows about payment gateway integration?"
+     *
+     * Tools are kept to maintain cross-links to product entities in the graph.
      */
     knowsAbout: [
+      // ── Core Frameworks ──────────────────────────────────────────────────
       'React.js',
       'React Native',
+      // ── Languages ────────────────────────────────────────────────────────
       'TypeScript',
       'JavaScript',
+      // ── Topical Concepts — subject-matter authority signals ───────────────
+      'Frontend Architecture',
+      'Component-Based Architecture',
+      'Performance Optimization',
+      'Mobile Application Development',
+      'Cross-Platform Development',
+      'Enterprise Software Development',
+      'Payment Gateway Integration',
+      'State Management',
+      'API Integration',
+      'Software Engineering Best Practices',
+      // ── Tools & Libraries ─────────────────────────────────────────────────
       'Material UI',
       'Adyen Payment Gateway',
       'REST APIs',
       'Zustand',
       'Redux Toolkit',
-      'Frontend Architecture',
-      'Performance Optimization',
       'Azure DevOps',
     ],
 

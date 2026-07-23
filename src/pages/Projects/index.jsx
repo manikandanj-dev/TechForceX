@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { SEO } from '@components/SEO'
-import { SEO_ROUTES } from '@/seo/seoConfig'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 import { buildSoftwareAppSchema } from '@/seo/schemas/softwareAppSchema'
 import { buildBreadcrumbSchema, buildPageGraph } from '@/seo/schemas/breadcrumbSchema'
 import { motion } from 'framer-motion'
@@ -286,7 +287,8 @@ export function Projects() {
     setSearchQuery(event.target.value)
   }
 
-  const seo = SEO_ROUTES['/projects']
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/projects')
 
   return (
     <PageTransition>
@@ -297,6 +299,7 @@ export function Projects() {
         ogTitle={seo.ogTitle}
         ogDesc={seo.ogDesc}
         schema={buildPageGraph([buildSoftwareAppSchema(), buildBreadcrumbSchema('/projects')])}
+        lang={locale}
       />
       <Box component="section" sx={{ position: 'relative', overflow: 'hidden' }}>
         <GradientBackground />
@@ -376,10 +379,10 @@ export function Projects() {
                           fontWeight: 700,
                           ...(isSelected
                             ? {
-                                color: '#fff',
-                                border: 'none',
-                                background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                              }
+                              color: '#fff',
+                              border: 'none',
+                              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                            }
                             : { borderColor: 'divider' }),
                         }}
                       />

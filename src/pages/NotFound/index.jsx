@@ -6,19 +6,25 @@ import { SectionContainer } from '@components/SectionContainer'
 import { PageTransition } from '@components/PageTransition'
 import { fadeInUp } from '@animations/variants'
 import { SEO } from '@components/SEO'
+import { getLocaleSeo } from '@/seo/seoLocales'
+import { useLocale } from '@hooks/useLocale'
 
 
 /**
  * Fallback page rendered for unmatched routes.
  */
 export function NotFound() {
+  const { locale } = useLocale()
+  const seo = getLocaleSeo(locale, '/404')
+
   return (
     <PageTransition>
       <SEO
-        title="Page Not Found — Manikandan J"
-        description="The page you are looking for does not exist."
-        canonical="/"
-        noIndex={true}
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.canonical}
+        noIndex={seo.noIndex}
+        lang={locale}
       />
       <SectionContainer sx={{ textAlign: 'center', py: { xs: 12, md: 18 } }}>
         <motion.div variants={fadeInUp} initial="hidden" animate="visible">

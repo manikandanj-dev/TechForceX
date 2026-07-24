@@ -16,6 +16,7 @@ import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded'
 import { GradientBackground } from '@components/GradientBackground'
 import { fadeInUp, staggerContainer } from '@animations/variants'
 import { usePrefersReducedMotion } from '@hooks/usePrefersReducedMotion'
+import { trackResumeDownload, trackSocialClick } from '@utils/analytics'
 import { SITE_NAME, NAV_LINKS, SOCIAL_LINKS } from '@utils/constants'
 
 const CONTACT_EMAIL = 'manikandanj.dev@gmail.com'
@@ -41,7 +42,12 @@ const CONNECT_LINKS = [
     href: findSocialUrl('LinkedIn') ?? 'https://linkedin.com',
   },
   { label: 'Email', icon: EmailRoundedIcon, href: `mailto:${CONTACT_EMAIL}` },
-  { label: 'Resume', icon: DownloadRoundedIcon, href: '/resume.pdf', download: true },
+  {
+    label: 'Resume',
+    icon: DownloadRoundedIcon,
+    href: '/resume/Manikandan_J_Resume.pdf',
+    download: 'Manikandan_J_Resume.pdf',
+  },
 ]
 
 /**
@@ -216,9 +222,31 @@ export function Footer() {
                           <IconButton
                             component="a"
                             href={social.href}
-                            target={isExternal ? '_blank' : undefined}
-                            rel={isExternal ? 'noopener noreferrer' : undefined}
+                            target={social.download ? undefined : isExternal ? '_blank' : undefined}
+                            rel={
+                              social.download
+                                ? undefined
+                                : isExternal
+                                  ? 'noopener noreferrer'
+                                  : undefined
+                            }
                             download={social.download || undefined}
+                            onClick={() => {
+                              if (social.download) {
+                                trackResumeDownload(
+                                  'footer',
+                                  typeof social.download === 'string'
+                                    ? social.download
+                                    : 'Manikandan_J_Resume.pdf'
+                                )
+                              } else if (social.label === 'LinkedIn') {
+                                trackSocialClick('linkedin', social.href, 'footer')
+                              } else if (social.label === 'GitHub') {
+                                trackSocialClick('github', social.href, 'footer')
+                              } else if (social.label === 'Email') {
+                                trackSocialClick('email', social.href, 'footer')
+                              }
+                            }}
                             aria-label={social.label}
                             sx={{
                               color: '#fff',

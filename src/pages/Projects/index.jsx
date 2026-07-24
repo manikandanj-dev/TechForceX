@@ -379,10 +379,10 @@ export function Projects() {
                           fontWeight: 700,
                           ...(isSelected
                             ? {
-                              color: '#fff',
-                              border: 'none',
-                              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                            }
+                                color: '#fff',
+                                border: 'none',
+                                background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                              }
                             : { borderColor: 'divider' }),
                         }}
                       />

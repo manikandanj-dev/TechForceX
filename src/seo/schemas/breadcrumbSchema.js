@@ -97,14 +97,14 @@ export function buildBreadcrumbSchema(routePath) {
       {
         '@type': 'ListItem',
         position: 1,
-        name: BREADCRUMB_ROUTES['/'],    // 'Home'
-        item: SITE.url,                  // 'https://tech-force-x.vercel.app'
+        name: BREADCRUMB_ROUTES['/'], // 'Home'
+        item: SITE.url, // 'https://tech-force-x.vercel.app'
       },
       {
         '@type': 'ListItem',
         position: 2,
-        name: pageLabel,                              // e.g. 'Projects'
-        item: `${SITE.url}${routePath}`,              // absolute URL of current page
+        name: pageLabel, // e.g. 'Projects'
+        item: `${SITE.url}${routePath}`, // absolute URL of current page
       },
     ],
   }

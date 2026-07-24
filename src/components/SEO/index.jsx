@@ -44,7 +44,7 @@ export function SEO({
   const resolvedOgDesc = ogDesc || resolvedDescription
   const resolvedOgImage = ogImage || SITE.ogImage
   const resolvedCanonical = canonical ? `${SITE.url}${canonical}` : SITE.url
-  const resolvedOgLocale = lang === 'da' ? 'da_DK' : (SITE.locale || 'en_IN')
+  const resolvedOgLocale = lang === 'da' ? 'da_DK' : SITE.locale || 'en_IN'
   const resolvedOgImageAlt = ogImageAlt || `${SITE.author} — Software Engineer`
 
   return (
@@ -60,7 +60,10 @@ export function SEO({
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
       ) : (
-        <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+        <meta
+          name="robots"
+          content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"
+        />
       )}
 
       {/* ── Canonical URL ── */}

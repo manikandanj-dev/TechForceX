@@ -1,4 +1,7 @@
 import { useState, memo } from 'react'
+import { EmailService } from '@services/emailService'
+import { validateContactForm } from '@utils/contactValidation'
+import { trackResumeDownload, trackSocialClick } from '@utils/analytics'
 import { SEO } from '@components/SEO'
 import { getLocaleSeo } from '@/seo/seoLocales'
 import { useLocale } from '@hooks/useLocale'
@@ -37,7 +40,6 @@ import { SOCIAL_LINKS } from '@utils/constants'
 
 const CONTACT_EMAIL = 'manikandanj.dev@gmail.com'
 const MESSAGE_MAX_LENGTH = 500
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const QUICK_CONTACT = [
   { icon: EmailRoundedIcon, label: 'Email', value: CONTACT_EMAIL },
@@ -59,10 +61,15 @@ const SOCIAL_BUTTONS = [
   },
   { label: 'Email', icon: EmailRoundedIcon, href: `mailto:${CONTACT_EMAIL}` },
   { label: 'Portfolio', icon: PublicRoundedIcon, href: '/' },
-  { label: 'Resume', icon: DownloadRoundedIcon, href: '/resume.pdf' },
+  {
+    label: 'Resume',
+    icon: DownloadRoundedIcon,
+    href: '/resume/Manikandan_J_Resume.pdf',
+    download: 'Manikandan_J_Resume.pdf',
+  },
 ]
 
-const INITIAL_VALUES = { name: '', email: '', subject: '', message: '' }
+const INITIAL_VALUES = { name: '', email: '', subject: '', message: '', website: '' }
 
 /**
  * Small glassmorphism card showing one piece of quick-contact info. The
@@ -137,10 +144,10 @@ const SocialButton = memo(function SocialButton({ social }) {
           prefersReducedMotion
             ? undefined
             : {
-              y: -6,
-              rotate: 8,
-              boxShadow: `0 16px 32px ${alpha(theme.palette.primary.main, 0.35)}`,
-            }
+                y: -6,
+                rotate: 8,
+                boxShadow: `0 16px 32px ${alpha(theme.palette.primary.main, 0.35)}`,
+              }
         }
         transition={{ type: 'spring', stiffness: 300, damping: 18 }}
         sx={{ borderRadius: '50%' }}
@@ -148,9 +155,23 @@ const SocialButton = memo(function SocialButton({ social }) {
         <IconButton
           component="a"
           href={social.href}
-          target={isExternal ? '_blank' : undefined}
-          rel={isExternal ? 'noopener noreferrer' : undefined}
-          download={social.label === 'Resume' || undefined}
+          target={social.download ? undefined : isExternal ? '_blank' : undefined}
+          rel={social.download ? undefined : isExternal ? 'noopener noreferrer' : undefined}
+          download={social.download || undefined}
+          onClick={() => {
+            if (social.download) {
+              trackResumeDownload(
+                'contact',
+                typeof social.download === 'string' ? social.download : 'Manikandan_J_Resume.pdf'
+              )
+            } else if (social.label === 'LinkedIn') {
+              trackSocialClick('linkedin', social.href, 'contact')
+            } else if (social.label === 'GitHub') {
+              trackSocialClick('github', social.href, 'contact')
+            } else if (social.label === 'Email') {
+              trackSocialClick('email', social.href, 'contact')
+            }
+          }}
           aria-label={social.label}
           sx={{
             width: 52,
@@ -175,10 +196,27 @@ const SocialButton = memo(function SocialButton({ social }) {
 })
 
 /**
+ * Safely sends Google Analytics 4 (GA4) event tracking without affecting component logic.
+ *
+ * @param {string} eventName - Name of the GA4 event (e.g. 'contact_form_submit').
+ * @param {Object} eventParams - Parameters accompanying the event.
+ */
+function trackGAEvent(eventName, eventParams = {}) {
+  try {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', eventName, eventParams)
+    }
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error('GA4 Event Tracking error:', error)
+    }
+  }
+}
+
+/**
  * Premium Contact section: a left-side professional CTA (intro card, quick
  * contact facts, social links) and a right-side validated contact form
- * with loading/success/error states. No backend is wired up yet — submit
- * is simulated locally so the UI/UX can be reviewed end-to-end.
+ * integrated with EmailJS.
  */
 export function Contact() {
   const theme = useTheme()
@@ -188,6 +226,7 @@ export function Contact() {
   const [values, setValues] = useState(INITIAL_VALUES)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (field) => (event) => {
     const { value } = event.target
@@ -195,33 +234,62 @@ export function Contact() {
     setValues((previous) => ({ ...previous, [field]: value }))
   }
 
-  const validate = () => {
-    const nextErrors = {}
-    if (!values.name.trim()) nextErrors.name = 'Full name is required.'
-    if (!values.email.trim()) {
-      nextErrors.email = 'Email address is required.'
-    } else if (!EMAIL_PATTERN.test(values.email.trim())) {
-      nextErrors.email = 'Enter a valid email address.'
-    }
-    if (!values.subject.trim()) nextErrors.subject = 'Subject is required.'
-    if (!values.message.trim()) nextErrors.message = 'Message is required.'
-    return nextErrors
-  }
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    const nextErrors = validate()
-    setErrors(nextErrors)
-    if (Object.keys(nextErrors).length > 0) return
 
-    setStatus('submitting')
-    // No backend is wired up yet — simulate a network request so the
-    // loading/success UI can be reviewed end-to-end.
-    setTimeout(() => {
+    // 1. Prevent duplicate submissions while request is in progress
+    if (status === 'submitting') return
+
+    // 2. Honeypot check: if website field is filled by a bot, silently return success
+    if (values.website?.trim()) {
       setStatus('success')
       setValues(INITIAL_VALUES)
-      showToast("Message sent! I'll get back to you soon.", 'success')
-    }, 1400)
+      setErrors({})
+      showToast('Thank you! Your message has been sent successfully.', 'success')
+      return
+    }
+
+    // 3. Trim values and run validation
+    const { isValid, errors: validationErrors, trimmedValues } = validateContactForm(values)
+    setErrors(validationErrors)
+    if (!isValid) return
+
+    const timestamp = new Date().toISOString()
+    const gaParams = {
+      page_name: 'contact',
+      form_name: 'contact_form',
+      timestamp,
+    }
+
+    setStatus('submitting')
+    setErrorMessage('')
+
+    // Fire GA4 event: contact_form_submit
+    trackGAEvent('contact_form_submit', gaParams)
+
+    try {
+      await EmailService.sendContactEmail(trimmedValues)
+
+      // Fire GA4 event: contact_form_success
+      trackGAEvent('contact_form_success', gaParams)
+
+      setStatus('success')
+      setValues(INITIAL_VALUES)
+      setErrors({})
+      showToast('Thank you! Your message has been sent successfully.', 'success')
+    } catch (error) {
+      // Fire GA4 event: contact_form_failed
+      trackGAEvent('contact_form_failed', gaParams)
+
+      const userFriendlyMsg =
+        error?.message === 'Request timed out. Please try again.'
+          ? 'Request timed out. Please try again.'
+          : 'Failed to send message. Please try again.'
+
+      setStatus('error')
+      setErrorMessage(userFriendlyMsg)
+      showToast(userFriendlyMsg, 'error')
+    }
   }
 
   const { locale } = useLocale()
@@ -376,6 +444,16 @@ export function Contact() {
                         onSubmit={handleSubmit}
                         aria-label="Contact form"
                       >
+                        <input
+                          type="text"
+                          name="website"
+                          value={values.website}
+                          onChange={handleChange('website')}
+                          style={{ display: 'none' }}
+                          tabIndex={-1}
+                          autoComplete="off"
+                          aria-hidden="true"
+                        />
                         <Stack spacing={2.5}>
                           <AnimatePresence mode="wait">
                             {status === 'success' && (
@@ -386,7 +464,7 @@ export function Contact() {
                                 exit={{ opacity: 0, y: -8 }}
                               >
                                 <Alert severity="success">
-                                  Message sent! I&apos;ll get back to you soon.
+                                  Thank you! Your message has been sent successfully.
                                 </Alert>
                               </motion.div>
                             )}
@@ -398,7 +476,7 @@ export function Contact() {
                                 exit={{ opacity: 0, y: -8 }}
                               >
                                 <Alert severity="error">
-                                  Something went wrong. Please try again.
+                                  {errorMessage || 'Failed to send message. Please try again.'}
                                 </Alert>
                               </motion.div>
                             )}
@@ -470,12 +548,15 @@ export function Contact() {
                               }
                               sx={{ flexGrow: 1 }}
                             >
-                              {status === 'submitting' ? 'Sending…' : 'Send Message'}
+                              {status === 'submitting' ? 'Sending...' : 'Send Message'}
                             </MagneticButton>
                             <MagneticButton
                               component="a"
-                              href="/resume.pdf"
-                              download
+                              href="/resume/Manikandan_J_Resume.pdf"
+                              download="Manikandan_J_Resume.pdf"
+                              onClick={() =>
+                                trackResumeDownload('contact', 'Manikandan_J_Resume.pdf')
+                              }
                               variant="outlined"
                               color="primary"
                               size="large"

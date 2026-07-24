@@ -394,13 +394,13 @@ function TimelineRow({ exp, index, isDesktop }) {
           variants={
             isEven
               ? {
-                hidden: { opacity: 0, x: -40 },
-                visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-              }
+                  hidden: { opacity: 0, x: -40 },
+                  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+                }
               : {
-                hidden: { opacity: 0, x: 40 },
-                visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-              }
+                  hidden: { opacity: 0, x: 40 },
+                  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+                }
           }
           initial="hidden"
           whileInView="visible"

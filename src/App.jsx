@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { BrowserRouter } from 'react-router-dom'
@@ -18,7 +18,7 @@ import { LoadingScreen } from '@components/LoadingScreen'
  */
 function App() {
   const { mode } = useThemeMode()
-  const theme = getTheme(mode)
+  const theme = useMemo(() => getTheme(mode), [mode])
   const [isLoading, setIsLoading] = useState(true)
 
   useSmoothScroll()

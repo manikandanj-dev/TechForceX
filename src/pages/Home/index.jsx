@@ -46,11 +46,11 @@ const FEATURE_ICONS = {
  * @returns {Object} JSON-LD object with @context and @graph
  */
 function buildHomePageGraph() {
-  // Strip @context from individual nodes — @graph owns the single context.
-  const { '@context': _c1, ...personNode } = buildPersonSchema()
-  const { ...webSiteNode } = buildWebSiteSchema()      // already has no @context
-  const { ...orgNode } = buildOrganizationSchema()     // already has no @context
-  const { ...faqNode } = buildFaqSchema()              // already has no @context
+  const personNode = buildPersonSchema()
+  delete personNode['@context']
+  const webSiteNode = buildWebSiteSchema()
+  const orgNode = buildOrganizationSchema()
+  const faqNode = buildFaqSchema()
 
   return {
     '@context': 'https://schema.org',

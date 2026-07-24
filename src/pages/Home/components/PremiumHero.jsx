@@ -21,6 +21,7 @@ import { GlassCard } from '@components/GlassCard'
 import { GradientBackground } from '@components/GradientBackground'
 import { fadeInUp, staggerContainer } from '@animations/variants'
 import { usePrefersReducedMotion } from '@hooks/usePrefersReducedMotion'
+import { trackResumeDownload, trackSocialClick } from '@utils/analytics'
 import profilePhoto from '@assets/ManikandanIfo.jpeg'
 
 const HERO_STATS = [
@@ -175,10 +176,9 @@ export function PremiumHero() {
                     </MagneticButton>
                     <MagneticButton
                       component="a"
-                      href="/resume.pdf"
-                      download
-                      target="_blank"
-                      rel="noopener"
+                      href="/resume/Manikandan_J_Resume.pdf"
+                      download="Manikandan_J_Resume.pdf"
+                      onClick={() => trackResumeDownload('home', 'Manikandan_J_Resume.pdf')}
                       variant="contained"
                       color="secondary"
                       size="large"
@@ -189,6 +189,9 @@ export function PremiumHero() {
                     <MagneticButton
                       component="a"
                       href="mailto:manikandanj.dev@gmail.com"
+                      onClick={() =>
+                        trackSocialClick('email', 'mailto:manikandanj.dev@gmail.com', 'home')
+                      }
                       variant="outlined"
                       color="primary"
                       size="large"
@@ -315,7 +318,9 @@ export function PremiumHero() {
                   <Box
                     component="img"
                     src={profilePhoto}
-                    alt="Manikandan J"
+                    alt="Manikandan J - React & React Native Software Engineer"
+                    loading="eager"
+                    fetchPriority="high"
                     decoding="async"
                     width={640}
                     height={640}

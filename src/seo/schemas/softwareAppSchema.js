@@ -142,8 +142,7 @@ const PROJECT_META = {
       'Responsive UI',
       'Transaction Management',
     ],
-    keywords:
-      'MNPS, vehicle fine collection, React.js, payment gateway, REST APIs, responsive UI',
+    keywords: 'MNPS, vehicle fine collection, React.js, payment gateway, REST APIs, responsive UI',
     url: null,
   },
 }

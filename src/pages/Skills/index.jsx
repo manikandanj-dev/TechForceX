@@ -216,9 +216,9 @@ export function Skills() {
                           prefersReducedMotion
                             ? undefined
                             : {
-                              y: -8,
-                              boxShadow: `0 24px 48px ${alpha(category.accent, 0.32)}`,
-                            }
+                                y: -8,
+                                boxShadow: `0 24px 48px ${alpha(category.accent, 0.32)}`,
+                              }
                         }
                         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                         style={{ height: '100%', borderRadius: 24 }}

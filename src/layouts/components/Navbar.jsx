@@ -19,6 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { alpha, useTheme } from '@mui/material/styles'
 import { ThemeToggleButton } from '@components/ThemeToggleButton'
+import { trackResumeDownload, trackSocialClick } from '@utils/analytics'
 import { DRAWER_WIDTH, NAV_LINKS, SITE_NAME } from '@utils/constants'
 
 const ACTIVE_GRADIENT = 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)'
@@ -29,14 +30,16 @@ function NavbarInner() {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [prevPath, setPrevPath] = useState(location.pathname)
   const [activePath, setActivePath] = useState(location.pathname)
   const { scrollY } = useScroll()
 
-  useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 24))
-
-  useEffect(() => {
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname)
     setActivePath(location.pathname)
-  }, [location.pathname])
+  }
+
+  useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 24))
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -120,7 +123,10 @@ function NavbarInner() {
             py: 1.25,
             borderRadius: 5,
             border: '1px solid',
-            borderColor: alpha(theme.palette.primary.main, theme.palette.mode === 'dark' ? 0.24 : 0.14),
+            borderColor: alpha(
+              theme.palette.primary.main,
+              theme.palette.mode === 'dark' ? 0.24 : 0.14
+            ),
             backdropFilter: 'blur(20px)',
             background: alpha(theme.palette.background.default, isScrolled ? 0.9 : 0.78),
             boxShadow: isScrolled
@@ -182,7 +188,11 @@ function NavbarInner() {
 
           {isDesktop ? (
             <>
-              <Stack direction="row" spacing={0.75} sx={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+              <Stack
+                direction="row"
+                spacing={0.75}
+                sx={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}
+              >
                 {navLinks.map((link) => {
                   const active = isLinkActive(link)
                   return (
@@ -253,7 +263,11 @@ function NavbarInner() {
                 })}
               </Stack>
 
-              <Stack direction="row" spacing={1} sx={{ alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}
+              >
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -263,7 +277,9 @@ function NavbarInner() {
                 >
                   <Button
                     component="a"
-                    href="#"
+                    href="/resume/Manikandan_J_Resume.pdf"
+                    download="Manikandan_J_Resume.pdf"
+                    onClick={() => trackResumeDownload('navbar', 'Manikandan_J_Resume.pdf')}
                     startIcon={<DownloadRoundedIcon />}
                     sx={{
                       borderRadius: 999,
@@ -304,6 +320,7 @@ function NavbarInner() {
                     href="https://github.com"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackSocialClick('github', 'https://github.com', 'navbar')}
                     sx={{
                       color: 'text.primary',
                       bgcolor: alpha(theme.palette.primary.main, 0.08),
@@ -328,6 +345,7 @@ function NavbarInner() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackSocialClick('linkedin', 'https://linkedin.com', 'navbar')}
                     sx={{
                       color: 'text.primary',
                       bgcolor: alpha(theme.palette.primary.main, 0.08),
@@ -392,8 +410,13 @@ function NavbarInner() {
           },
         }}
       >
-        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }} role="presentation">
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2.5 }}>
+        <Box
+          sx={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}
+          role="presentation"
+        >
+          <Box
+            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2.5 }}
+          >
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
               {SITE_NAME}
             </Typography>
@@ -428,7 +451,9 @@ function NavbarInner() {
           <Box sx={{ mt: 'auto', p: 2.5, display: 'flex', flexDirection: 'column', gap: 1.25 }}>
             <Button
               component="a"
-              href="#"
+              href="/resume/Manikandan_J_Resume.pdf"
+              download="Manikandan_J_Resume.pdf"
+              onClick={() => trackResumeDownload('navbar_mobile', 'Manikandan_J_Resume.pdf')}
               startIcon={<DownloadRoundedIcon />}
               fullWidth
               sx={{
@@ -448,6 +473,7 @@ function NavbarInner() {
                 href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackSocialClick('github', 'https://github.com', 'navbar_mobile')}
                 sx={{
                   color: 'text.primary',
                   bgcolor: alpha(theme.palette.primary.main, 0.08),
@@ -461,6 +487,9 @@ function NavbarInner() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() =>
+                  trackSocialClick('linkedin', 'https://linkedin.com', 'navbar_mobile')
+                }
                 sx={{
                   color: 'text.primary',
                   bgcolor: alpha(theme.palette.primary.main, 0.08),

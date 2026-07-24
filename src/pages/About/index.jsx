@@ -193,6 +193,7 @@ export function About() {
                       component="img"
                       src={profilePhoto}
                       alt="Manikandan J"
+                      loading="lazy"
                       decoding="async"
                       width={320}
                       height={320}

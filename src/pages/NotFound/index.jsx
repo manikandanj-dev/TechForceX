@@ -9,7 +9,6 @@ import { SEO } from '@components/SEO'
 import { getLocaleSeo } from '@/seo/seoLocales'
 import { useLocale } from '@hooks/useLocale'
 
-
 /**
  * Fallback page rendered for unmatched routes.
  */
